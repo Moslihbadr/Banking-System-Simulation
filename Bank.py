@@ -117,3 +117,25 @@ class Operation:
             self.__libelle = value
         else:
             raise Exception("Libelle invalide, donner un libelle à l'opération")
+     
+    
+    # Les methodes -------------------------------------------------------------
+    # Methods  -------------------------------------------------------------
+    def Valider(self, cls, dateValidation: str | date | datetime):
+        if isinstance(ToDate(self, dateValidation), datetime):
+            self.DateValidation = dateValidation
+            # cls.Solde += (self.Montant * self.TypeOp)
+        else:
+            print("Date validation invalide")
+            self.DateValidation = None
+
+    def __str__(self) -> str:
+        return f"{self.NOperation:3} ; " \
+               f"{self.DateOperation.strftime('%m-%d-%Y %H:%M:%S')} ; " \
+               f"{self.DateValidation.strftime('%m-%d-%Y %H:%M:%S')} ; " \
+               f"{self.Libelle:50} ; " \
+               f"{(self.Montant * self.TypeOp):12.2f} ; " \
+               f"{self.TypeOp:2} ; " \
+               f"{self.ModeOp}"
+
+
