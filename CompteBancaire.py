@@ -44,3 +44,76 @@ class Operation:
         self.__lesModeOp = ["E", "C", "V", "T", "G", "A", "P"]
         # self.__lesTypeOp = dict{-1:"Retrait", 1:"Depos"}
         # self.__lesModeOp = dict{"E":"Espèce", "C":"Chèque", "V":"Virement", "T":"Transfer", "G":"Guichet", "A":"Agios", "P":"Prélévement"}
+
+        
+    # les proprietes
+    # Properties
+    @property
+    def NOperation(self) -> int:
+        return self.__nOperation
+
+    @property
+    def DateOperation(self) -> datetime:
+        return self.__dateOperation
+
+    @DateOperation.setter
+    def DateOperation(self, value: str | date | datetime):
+        self.__dateOperation = ToDate(self, value)
+
+    @property
+    def DateValidation(self) -> datetime:
+        return self.__dateValidation
+
+    @DateValidation.setter
+    def DateValidation(self, value: str | date | datetime):
+        if value is None:
+            self.__dateValidation = value
+        elif (ToDate(self, value) - (self.DateOperation)).days >= 0:
+            self.__dateValidation = ToDate(self, value)
+        else:
+            raise Exception(f"Validation de l'opération impossible, Date de validation : {ToDate(value)} "
+                            f"est antérieure à la date de l'opération : {self.DateOperation}")
+
+    @property
+    def TypeOp(self) -> int:
+        return self.__typeOp
+
+    @TypeOp.setter
+    def TypeOp(self, value: int):
+        if value in self.__lesTypeOp:
+            self.__typeOp = value
+        else:
+            raise Exception(f"Type de l'opération invalide; valeur : {value}; les valeurs valides : {self.__lesTypeOp}")
+
+    @property
+    def ModeOp(self) -> str:
+        return self.__modeOp
+
+    @ModeOp.setter
+    def ModeOp(self, value: str):
+        if value.upper() in self.__lesModeOp:
+            self.__modeOp = value.upper()
+        else:
+            raise Exception(f"Type de l'opération invalide; valeur : {value}; les valeurs valides : {self.__lesModeOp}")
+
+    @property
+    def Montant(self) -> float:
+        return self.__montant
+
+    @Montant.setter
+    def Montant(self, value: float | int):
+        if value > 0:
+            self.__montant = value
+        else:
+            raise Exception(f"Montant de l'opération invalide; valeur : {value}")
+
+    @property
+    def Libelle(self) -> str:
+        return self.__libelle
+
+    @Libelle.setter
+    def Libelle(self, value: str):
+        if value != "" and value is not None:
+            self.__libelle = value
+        else:
+            raise Exception("Libelle invalide, donner un libelle à l'opération")
