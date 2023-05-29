@@ -169,3 +169,55 @@ class Compte:
     @Solde.setter
     def Solde(self, value: float | int):
         self.__solde = value
+    
+        @property
+    def Agios(self) -> float:
+        return self.Solde * self.__tauxAgios / 100
+        # \
+        #         if ((date.today() - self.__dateAgios).days / 90) >= 3 \
+        #         else 0
+                # if tairnaire : var = valeurSiVrai if condition else valeurSiFaux
+    @property
+    def DateCreation(self) -> datetime:
+        return self.__dateCreation
+
+    @DateCreation.setter
+    def DateCreation(self, value):
+        self.__dateCreation = ToDate(self, value)
+
+    @property
+    def DateCloture(self) -> datetime:
+        return self.__dateCloture
+
+    @DateCloture.setter
+    def DateCloture(self, value):
+        if self.DateCloture is None:
+            if (ToDate(self, value) - self.DateCreation).days >= 0:
+                self.__dateCloture = ToDate(self, value)
+            else:
+                raise Exception("Impossible de cloturer le compte, date cloture est antérieure à la date de création")
+        else:
+            raise Exception(f"Impossible de cloturer le compte, le compte est déja cloturé le {self.DateCloture}")
+
+    @property
+    def DateAgios(self):
+        return self.__dateAgios
+
+    @DateAgios.setter
+    def DateAgios(self, value):
+        self.__dateAgios = ToDate(self, value)
+
+    # Le consctructeur
+    def __init__(self, titulaire: str, solde: float | int = 0):
+        print("Instanciation du compte")
+        Compte.__auto += 1
+        self.__nCompte = Compte.__auto
+        self.Titulaire = titulaire
+        self.DateCreation = datetime.now()
+        self.__lesOperation = []
+        self.Solde = 0
+        if solde > 0:
+            self.Verser("E",solde, "Ouverture du compte")
+        # self.DateCreation = dateCreation
+        # self.DateCloture = self.DateAgios = None
+
