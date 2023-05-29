@@ -220,4 +220,37 @@ class Compte:
             self.Verser("E",solde, "Ouverture du compte")
         # self.DateCreation = dateCreation
         # self.DateCloture = self.DateAgios = None
+      
+    
+    # les methodes
+    def Verser(self, modeOp, montant, libelle):
+        print(f"Versement en {modeOp} de {montant:.2f} => {libelle}")
+        if montant > 0:
+            self.__lesOperation.append(Operation(1, modeOp, montant, libelle))
+            self.Solde += montant
+        else:
+            raise Exception("Montant du versement invalide")
+
+    def Retirer(self, modeOp, montant, libelle):
+        print(f"Retrait en {modeOp} de {montant:.2f} => {libelle}")
+        if self.Solde >= montant > 0:
+            self.__lesOperation.append(Operation(-1, modeOp, montant, libelle))
+            self.Solde -= montant
+        else:
+            raise Exception("Montant de retrait invalide")
+
+    def AppliquerAgios(self):
+        print("Appliquer agios")
+        self.Retirer("A", self.Agios, f"Agios de {self.__tauxAgios}% sur le solde du compte du {date.today()}")
+        self.DateAgios = date.today()
+
+    def Cloturer(self, dateCloture):
+        self.DateCloture = dateCloture
+
+    def Solder(self):
+        pass
+
+    def Activer(self):
+        pass
+
 
