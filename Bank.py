@@ -254,3 +254,44 @@ class Compte:
         pass
 
 
+    
+    def __str__(self) -> str:
+        return f"Compte bancaire Numero : {self.NCompte}\n" \
+               f"Titulaire     : {self.Titulaire}\n" \
+               f"Solde         : {self.Solde:6.2f} dh\n" \
+               f"Date création : {self.DateCreation}\n" \
+               f"Date Agios    : {self.DateAgios}\n" \
+               f"Date cloture  : {self.DateCloture}\n" \
+            # if self.DateCloture is not None else ""
+
+    def Info(self):
+        print(self.__str__())
+
+    def Releve(self):
+        print(f"Relevé du compte : {self.NCompte} \n")
+        for op in self.__lesOperation:
+            print (f"{op}")
+        print (f" === > Solde du compte : {self.Solde:6.2f} dh\n")
+
+# ----------------------------------------------------
+# Programme principal
+# main program
+c1 = Compte("Ahmed", 10000)
+# print(c1)
+# time.sleep(1)
+
+c1.Verser("V", 26000, "Virement du salaire du mois 12/2022")
+# print(c1)
+# time.sleep(1)
+
+c1.Retirer("G", 5000, "Retrait par guichet bancaire")
+# print(c1)
+# time.sleep(1)
+
+c1.AppliquerAgios()
+print(c1)
+# time.sleep(1)
+
+# print(c1.Releve())
+c1.Releve()
+
