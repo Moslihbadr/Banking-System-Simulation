@@ -139,3 +139,32 @@ class Operation:
                f"{self.ModeOp}"
 
 
+# ----------------------------------------------------
+# classe Compte
+class Compte:
+    __auto = __nCompte = 0
+    __titulaire = ""
+    __dateCreation = __dateCloture = __dateAgios = None
+    __lesOperation = []
+    __solde = 0
+    __tauxAgios = 1.5
+
+    @property
+    def NCompte(self) -> int:
+        return self.__nCompte
+
+    @property
+    def Titulaire(self) -> str:
+        return self.__titulaire
+
+    @Titulaire.setter
+    def Titulaire(self, value: str):
+        self.__titulaire = value
+
+    @property
+    def Solde(self) -> float:
+        return self.__solde
+
+    @Solde.setter
+    def Solde(self, value: float | int):
+        self.__solde = value
