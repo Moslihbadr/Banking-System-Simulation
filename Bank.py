@@ -141,6 +141,7 @@ class Operation:
 
 # ----------------------------------------------------
 # classe Compte
+# compte class
 class Compte:
     __auto = __nCompte = 0
     __titulaire = ""
